@@ -18,6 +18,9 @@ namespace ZooManagement.Models.Request
         public DateTime AcquirementDate { get; set; }
 
         [Required]
+        public string Class { get; set; }
+
+        [Required]
         public string Family { get; set; }
 
         [Required]
@@ -25,5 +28,8 @@ namespace ZooManagement.Models.Request
 
         [Required]
         public string Species { get; set; }
+
+        [Required]
+        public string Alias { get; set; }
     }
 }

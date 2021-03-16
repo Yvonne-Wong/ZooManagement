@@ -20,11 +20,15 @@ namespace ZooManagement.Models.Database {
 
         public DateTime AcquirementDate { get; set; }
 
+        public string Class { get; set; }
+
         public string Family { get; set; }
 
         public string Genus { get; set; }
         
         public string Species {get; set; }
+
+        public string Alias { get; set; }
         
     }
 }

@@ -19,6 +19,14 @@ namespace ZooManagement.Controllers
             _animals = animals;
         }
 
+        [HttpGet("")]
+        public ActionResult<AnimalListResponse> Search([FromQuery] AnimalSearchRequest searchRequest) 
+        {
+            var animals = _animals.Search(searchRequest);
+            var animalCount = _animals.Count(searchRequest);
+            return AnimalListResponse.Create(searchRequest, animals, animalCount);
+        }
+
         [HttpGet("{id}")]
         public ActionResult<AnimalResponse> GetById([FromRoute] int id)
         {
