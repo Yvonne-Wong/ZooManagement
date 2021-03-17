@@ -31,13 +31,13 @@ namespace ZooManagement
 
             if (!context.Animals.Any())
             {
-                // var animaltypes = SampleAnimalTypes.GetAnimalTypes();
-                // context.AnimalTypes.AddRange(animaltypes);
-                // context.SaveChanges();
+                var animaltypes = SampleAnimalTypes.GetAnimalTypes();
+                context.AnimalTypes.AddRange(animaltypes);
+                context.SaveChanges();
 
-                // var animals = SampleAnimals.GetAnimals();
-                // context.Animals.AddRange(animals);
-                // context.SaveChanges();
+                var animals = SampleAnimals.GetAnimals();
+                context.Animals.AddRange(animals);
+                context.SaveChanges();
             }
         }
 
