@@ -62,6 +62,14 @@ namespace ZooManagement.Repositories
                 .OrderBy(a => a.Class)
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize);
+
+                // http://localhost:5000/animals?class=Mammal&name=Timmy
+                // Request.QueryString["class"]
+                // Request.QueryString["name"]
+                // .Where(
+                //    p.Name.ToLower().Contains(Request.QueryString["name"]) &&
+                //    p.Class.ToLower().Contains(Request.QueryString["class"])
+                // )
         }
 
         public int Count(AnimalSearchRequest search)
