@@ -37,11 +37,7 @@ namespace ZooManagement.Repositories
                 Sex = newAnimal.Sex,
                 DateOfBirth = newAnimal.DateOfBirth,   
                 AcquirementDate = newAnimal.AcquirementDate,
-                Class = newAnimal.Class,
-                Family = newAnimal.Family,
-                Genus = newAnimal.Genus,
-                Species = newAnimal.Species,
-                Alias = newAnimal.Alias          
+                AnimalTypeId = newAnimal.AnimalTypeId         
             });
             _context.SaveChanges();
             return insertResponse.Entity;
@@ -53,23 +49,15 @@ namespace ZooManagement.Repositories
                 .Where(p => search.Search == null || 
                             (
                                 p.Name.ToLower().Contains(search.Search) ||
-                                p.Alias.ToLower().Contains(search.Search) ||
-                                p.Class.ToLower().Contains(search.Search) ||
-                                p.Genus.ToLower().Contains(search.Search) ||
-                                p.Species.ToLower().Contains(search.Search) ||
-                                p.Family.ToLower().Contains(search.Search) 
+                                p.AnimalType.Alias.ToLower().Contains(search.Search) ||
+                                p.AnimalType.Class.ToLower().Contains(search.Search) ||
+                                p.AnimalType.Genus.ToLower().Contains(search.Search) ||
+                                p.AnimalType.Species.ToLower().Contains(search.Search) ||
+                                p.AnimalType.Family.ToLower().Contains(search.Search) 
                             ))
-                .OrderBy(a => a.Class)
+                .OrderBy(a => a.AnimalType.Class)
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize);
-
-                // http://localhost:5000/animals?class=Mammal&name=Timmy
-                // Request.QueryString["class"]
-                // Request.QueryString["name"]
-                // .Where(
-                //    p.Name.ToLower().Contains(Request.QueryString["name"]) &&
-                //    p.Class.ToLower().Contains(Request.QueryString["class"])
-                // )
         }
 
         public int Count(AnimalSearchRequest search)
@@ -78,11 +66,11 @@ namespace ZooManagement.Repositories
                 .Count(p => search.Search == null || 
                             (
                                 p.Name.ToLower().Contains(search.Search) ||
-                                p.Class.ToLower().Contains(search.Search) ||
-                                p.Family.ToLower().Contains(search.Search) ||
-                                p.Genus.ToLower().Contains(search.Search) ||
-                                p.Species.ToLower().Contains(search.Search) ||
-                                p.Alias.ToLower().Contains(search.Search)
+                                p.AnimalType.Class.ToLower().Contains(search.Search) ||
+                                p.AnimalType.Family.ToLower().Contains(search.Search) ||
+                                p.AnimalType.Genus.ToLower().Contains(search.Search) ||
+                                p.AnimalType.Species.ToLower().Contains(search.Search) ||
+                                p.AnimalType.Alias.ToLower().Contains(search.Search)
                             ));
         }
     }

@@ -21,14 +21,14 @@ namespace ZooManagement.Models.Response
 
         public DateTime AcquirementDate => _animal.AcquirementDate.Date;
 
-        public string Class => _animal.Class;
+        public string Class => _animal.AnimalType.Class;        
 
-        public string Family => _animal.Family;
+        public string Family => _animal.AnimalType.Family;
 
-        public string Genus => _animal.Genus;
+        public string Genus => _animal.AnimalType.Genus;
 
-        public string Species => _animal.Species;
+        public string Species => _animal.AnimalType.Species;
 
-        public string Alias => _animal.Alias;
+        public string Alias => _animal.AnimalType.Alias;
     }
 }
