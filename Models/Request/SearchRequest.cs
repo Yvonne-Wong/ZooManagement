@@ -46,7 +46,10 @@ namespace ZooManagement.Models.Request
             get { return alias == null ? null : alias.ToLower(); }
             set { alias = value; }
         }
-        public string Search => $"{Name}{Age}{DateAcquired}{Class}{Alias}";
-        public override string Filters => Search == null ? "" : $"{(Name == null ? "" : $"&name={Name}")}{(Age == null ? "" : $"&age={Age}")}{(DateAcquired == null ? "" : $"&acquired={DateAcquired}")}{(Class == null ? "" : $"&class={Class}")}{(Alias == null ? "" : $"&species={Alias}")}";  
+
+        [FromQuery(Name = "order")]
+        public string Order { get; set; }
+        public string Search => $"{Name}{Age}{DateAcquired}{Class}{Alias}{Order}";
+        public override string Filters => Search == null ? "" : $"{(Name == null ? "" : $"&name={Name}")}{(Age == null ? "" : $"&age={Age}")}{(DateAcquired == null ? "" : $"&acquired={DateAcquired}")}{(Class == null ? "" : $"&class={Class}")}{(Alias == null ? "" : $"&species={Alias}")}{(Order == null ? "" : $"&order={Order}")}";  
     }
 }

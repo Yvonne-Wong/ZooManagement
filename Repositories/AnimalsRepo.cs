@@ -47,22 +47,6 @@ namespace ZooManagement.Repositories
         }
         public IEnumerable<Animal> Search(AnimalSearchRequest search)
         {
-            // search.Name search.Age search.DateAcquired search.Class search.Alias
-            // return _context.Animals
-            //     .Include(a => a.AnimalType)
-            //     .Where(a => search.Search == null || 
-            //                 (
-            //                     a.Name.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Alias.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Class.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Genus.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Species.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Family.ToLower().Contains(search.Search) 
-            //                 ))
-            //     .OrderBy(a => a.AnimalType.Class)
-            //     .Skip((search.Page - 1) * search.PageSize)
-            //     .Take(search.PageSize);
-
             // int CalculateAge(DateTime birthday)
             // {
             //     // DateTime birthday = DateOfBirth;
@@ -70,6 +54,27 @@ namespace ZooManagement.Repositories
             //     if (birthday.Date > DateTime.Today.AddYears(-age)) { age--; }
             //     return age;
             // }  
+            string sortColumn = "Id";
+            if (!String.IsNullOrEmpty(search.Order)) 
+            {
+                switch (search.Order.ToLower())
+                {
+                    case "name":
+                        sortColumn = "Name";
+                        break;
+                    // case "age":
+                    //     // .OrderBy(a => a.DateOfBirth)
+                    //     break;
+                    // case "species":
+                    //     // .OrderBy(a => a.AnimalType.Alias)
+                    //     break;
+                    default:
+                        sortColumn = "Id";
+                        break;
+                }
+            }
+
+            DateTime? AcquiredDateToSearch = search.DateAcquired == null ? null : DateTime.Parse(search.DateAcquired);
 
             return _context.Animals
                 .Include(a => a.AnimalType)
@@ -77,10 +82,11 @@ namespace ZooManagement.Repositories
                             (
                                 (search.Name == null || a.Name.ToLower().Contains(search.Name)) &&
                                 (search.Age == null || (a.DateOfBirth > DateTime.Today.AddYears(a.DateOfBirth.Year - DateTime.Today.Year) ? DateTime.Today.Year - a.DateOfBirth.Year - 1 : DateTime.Today.Year - a.DateOfBirth.Year) == search.Age) &&
+                                (search.DateAcquired == null || a.AcquirementDate == AcquiredDateToSearch) &&
                                 (search.Class == null || a.AnimalType.Class.ToLower().Contains(search.Class)) &&
                                 (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) 
                             ))
-                .OrderBy(a => a.AnimalType.Class)
+                .OrderBy(a => EF.Property<object>(a, sortColumn))
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize);
         }
@@ -92,21 +98,10 @@ namespace ZooManagement.Repositories
                 .Count(a => search.Search == null || 
                             (
                                 (search.Name == null || a.Name.ToLower().Contains(search.Name)) &&
+                                (search.Age == null || (a.DateOfBirth > DateTime.Today.AddYears(a.DateOfBirth.Year - DateTime.Today.Year) ? DateTime.Today.Year - a.DateOfBirth.Year - 1 : DateTime.Today.Year - a.DateOfBirth.Year) == search.Age) &&
                                 (search.Class == null || a.AnimalType.Class.ToLower().Contains(search.Class)) &&
                                 (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) 
                             ));
-
-            // return _context.Animals
-            //     .Include(a => a.AnimalType)
-            //     .Count(a => search.Search == null || 
-            //                 (
-            //                     a.Name.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Class.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Family.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Genus.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Species.ToLower().Contains(search.Search) ||
-            //                     a.AnimalType.Alias.ToLower().Contains(search.Search)
-            //                 ));
         }
     }
 }

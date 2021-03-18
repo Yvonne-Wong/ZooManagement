@@ -16,12 +16,5 @@ namespace ZooManagement.Models.Database {
         public DateTime AcquirementDate { get; set; }
         public int AnimalTypeId { get; set; }
         public AnimalType AnimalType { get; set; }   
-        // public static int CalculateAge()
-        // {
-        //     DateTime birthday = DateOfBirth;
-        //     int age = DateTime.Today.Year - birthday.Year;
-        //     if (birthday.Date > DateTime.Today.AddYears(-age)) { age--; }
-        //     return age;
-        // }  
     }
 }
