@@ -62,9 +62,9 @@ namespace ZooManagement.Repositories
                     case "name":
                         sortColumn = "Name";
                         break;
-                    // case "age":
-                    //     // .OrderBy(a => a.DateOfBirth)
-                    //     break;
+                    case "age":
+                        sortColumn = "DateOfBirth";
+                        break;
                     // case "species":
                     //     // .OrderBy(a => a.AnimalType.Alias)
                     //     break;
