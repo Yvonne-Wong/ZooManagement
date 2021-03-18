@@ -110,7 +110,8 @@ namespace ZooManagement.Data
             "Rascal",
             "Ripley",
             "Jonesy",
-            "Pim"
+            "Pim",
+            "Macaroni"
         };
         public static IEnumerable<Animal> GetAnimals()
         {

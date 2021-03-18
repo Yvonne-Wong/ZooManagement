@@ -5,8 +5,6 @@ namespace ZooManagement.Data
 {
     public static class SampleAnimalTypes
     {
-        public static int NumberOfAnimalTypes = 20;
-
         private static List<AnimalType> _animaltypes = new List<AnimalType>
         {
             new AnimalType
@@ -25,7 +23,7 @@ namespace ZooManagement.Data
                 Family = "Dendrobatidae",
                 Genus = "Dendrobates",
                 Species = "D. tinctorius",
-                Alias = "Blue Poison Dart Frog"
+                Alias = "Blue poison dart frog"
             },
             new AnimalType
             {
@@ -80,7 +78,7 @@ namespace ZooManagement.Data
                 Family = "Ulmaridae",
                 Genus = "Aurelia",
                 Species = "A. aurita",
-                Alias = "Moon Jellyfish"
+                Alias = "Moon jellyfish"
             },
             new AnimalType
             {
@@ -99,7 +97,97 @@ namespace ZooManagement.Data
                 Genus = "Eublepharis",
                 Species = "E. macularius",
                 Alias = "Leopard gecko"
-            }   
+            },
+            new AnimalType
+            {
+                Id = 11,
+                Class = "Mammal",
+                Family = "Elephantidae",
+                Genus = "Loxodonta",
+                Species = "L. africana",
+                Alias = "African bush elephant" 
+            },   
+            new AnimalType
+            {
+                Id = 12,
+                Class = "Amphibian",
+                Family = "Amphiumidae",
+                Genus = "Salamandridae",
+                Species = "Ambystoma maculatum",
+                Alias = "Asiatic salamander"
+            },
+            new AnimalType
+            {
+                Id = 13,
+                Class = "Mammal",
+                Family = "Giraffidae",
+                Genus = "Giraffa",
+                Species = "G. camelopardalis",
+                Alias = "Giraffe"
+            },
+            new AnimalType
+            {
+                Id = 14,
+                Class = "Mammal",
+                Family = "Felidae",
+                Genus = "Panthera",
+                Species = "P. tigris",
+                Alias = "Tiger"
+            },
+            new AnimalType
+            { 
+                Id = 15,
+                Class = "Mammal",
+                Family = "Felidae",
+                Genus = "Panthera",
+                Species = "P. leo",
+                Alias = "Lion"
+            },
+            new AnimalType
+            {
+                Id = 16,
+                Class = "Bird",
+                Family = "Spheniscidae",
+                Genus = "Aptenodytes",
+                Species = "	A. forsteri",
+                Alias = "Emperor penguin"
+            },
+            new AnimalType
+            {
+                Id = 17,
+                Class = "Mammal",
+                Family = "Ursidae",
+                Genus = "Helarctos",
+                Species = "H. malayanus",
+                Alias = "Sun bear"
+            },
+            new AnimalType
+            {
+                Id = 18,
+                Class = "Mammal",
+                Family = "Equidae",
+                Genus = "Equus",
+                Species = "E. quagga",
+                Alias = "Common zebra"
+            },
+            new AnimalType
+            {
+                Id = 19,
+                Class = "Reptile",
+                Family = "Testudinidae",
+                Genus = "Chelonoidis",
+                Species = "C. n. complex",
+                Alias = "Galapagos tortoise"
+            },
+            new AnimalType
+            { 
+                Id = 20,
+                Class = "Mammal",
+                Family = "Bradypodidae",
+                Genus = "Bradypus",
+                Species = "B. variegatus",
+                Alias = "Three-toed sloth"
+            }
         };
         public static IEnumerable<AnimalType> GetAnimalTypes()
         {
