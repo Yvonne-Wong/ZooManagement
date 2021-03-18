@@ -99,6 +99,7 @@ namespace ZooManagement.Repositories
                             (
                                 (search.Name == null || a.Name.ToLower().Contains(search.Name)) &&
                                 (search.Age == null || (a.DateOfBirth > DateTime.Today.AddYears(a.DateOfBirth.Year - DateTime.Today.Year) ? DateTime.Today.Year - a.DateOfBirth.Year - 1 : DateTime.Today.Year - a.DateOfBirth.Year) == search.Age) &&
+                                (search.DateAcquired == null || a.AcquirementDate == AcquiredDateToSearch) &&
                                 (search.Class == null || a.AnimalType.Class.ToLower().Contains(search.Class)) &&
                                 (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) 
                             ));
