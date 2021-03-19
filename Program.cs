@@ -32,6 +32,10 @@ namespace ZooManagement
 
             if (!context.Animals.Any())
             {
+                var enclosures = SampleEnclosures.GetEnclosures();
+                context.Enclosures.AddRange(enclosures);
+                context.SaveChanges();
+
                 var animaltypes = SampleAnimalTypes.GetAnimalTypes();
                 context.AnimalTypes.AddRange(animaltypes);
                 context.SaveChanges();

@@ -16,5 +16,7 @@ namespace ZooManagement.Models.Database {
         public DateTime AcquirementDate { get; set; }
         public int AnimalTypeId { get; set; }
         public AnimalType AnimalType { get; set; }   
+        public int EnclosureId { get; set; }
+        public Enclosure Enclosure { get; set; }
     }
 }

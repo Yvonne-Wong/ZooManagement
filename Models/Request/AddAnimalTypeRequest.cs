@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 using ZooManagement.Models.Database;
+using System.Collections.Generic;
 
 namespace ZooManagement.Models.Request
 {
@@ -20,5 +21,10 @@ namespace ZooManagement.Models.Request
 
         [Required]
         public string Alias { get; set; }
+
+        [Required]
+        public List<int> EnclosureIds { get; set; }
+
+
     }
 }

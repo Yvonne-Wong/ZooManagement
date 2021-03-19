@@ -30,5 +30,7 @@ namespace ZooManagement.Models.Response
         public string Species => _animal.AnimalType.Species;
 
         public string Alias => _animal.AnimalType.Alias;
+
+        public string Enclosure => _animal.Enclosure.EnclosureName;
     }
 }

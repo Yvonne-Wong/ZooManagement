@@ -187,11 +187,50 @@ namespace ZooManagement.Data
                 Genus = "Bradypus",
                 Species = "B. variegatus",
                 Alias = "Three-toed sloth"
+            },
+            new AnimalType
+            {
+                Id = 21,
+                Class = "Mammal",
+                Family = "Hippopotamidae",
+                Genus = "Hippopotamus",
+                Species = "H. amphibius",
+                Alias = "Hippopotamus"
             }
+        };
+
+        private static List<(int AnimalTypeId, int EnclosureId)> _animaltypeenclosures = new List<(int AnimalTypeId, int EnclosureId)>
+        {
+            (1, 10),
+            (2, 4),
+            (3, 2),
+            (4, 2),
+            (5, 6),
+            (6, 6), 
+            (7, 10),
+            (8, 6),
+            (9, 9),
+            (10, 4),
+            (11, 8),
+            (12, 4),
+            (13, 5),
+            (14, 1),
+            (15, 8),
+            (16, 7),
+            (17, 9),
+            (18, 8),
+            (19, 4),
+            (20, 10),
+            (21, 3)
         };
         public static IEnumerable<AnimalType> GetAnimalTypes()
         {
             return _animaltypes;
         }
+
+       public static List<(int AnimalTypeId, int EnclosureId)> GetAnimalTypeEnclosure()
+       {
+           return _animaltypeenclosures;
+       }
     }
 }

@@ -8,8 +8,10 @@ namespace ZooManagement.Data
     public static class SampleAnimals
     {
         public static int NumberOfAnimals = 100;
-        private static IEnumerable<AnimalType> _animaltypes = SampleAnimalTypes.GetAnimalTypes();
-
+        // private static IEnumerable<AnimalType> _animaltypes = SampleAnimalTypes.GetAnimalTypes();
+        // private static IEnumerable<Enclosure> _enclosures = SampleEnclosures.GetEnclosures();
+        private static List<(int AnimalTypeId, int EnclosureId)> _animaltypeenclosures = SampleAnimalTypes.GetAnimalTypeEnclosure();
+        
         private static List<string> _names = new List<string>
         {
             "Kiki",
@@ -137,13 +139,16 @@ namespace ZooManagement.Data
             }
             
             Random rand = new Random();
+            var animaltypeid = rand.Next(1, _animaltypeenclosures.Count()+1);
             return new Animal
             {
                 Name = _names[index],
                 Sex = rand.Next(0, 2) == 0 ? false : true,
                 DateOfBirth = birthday,
                 AcquirementDate = RandomAcquirement(birthday),
-                AnimalTypeId = rand.Next(1, _animaltypes.Count()+1)  //randomly pick a number between 1 and number of AnimalTypes
+                // AnimalTypeId = rand.Next(1, _animaltypes.Count()+1)  //randomly pick a number between 1 and number of AnimalTypes
+                AnimalTypeId = animaltypeid,
+                EnclosureId = _animaltypeenclosures[animaltypeid-1].Item2
             };
         }
     }

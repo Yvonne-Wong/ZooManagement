@@ -20,5 +20,7 @@ namespace ZooManagement.Models.Request
 
         [Required]
         public int AnimalTypeId { get; set; }
+        [Required]
+        public int EnclosureId { get; set; }
     }
 }

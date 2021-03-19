@@ -12,5 +12,6 @@ namespace ZooManagement.Models.Database
         public string Species {get; set; }
         public string Alias { get; set; }
         public ICollection<Animal> Animals { get; set; }
+        public ICollection<Enclosure> Enclosures { get; set; }
     }
 }
