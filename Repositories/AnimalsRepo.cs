@@ -47,36 +47,43 @@ namespace ZooManagement.Repositories
         }
         public IEnumerable<Animal> Search(AnimalSearchRequest search)
         {
-            // int CalculateAge(DateTime birthday)
+            // string sortColumn = "Id";
+            // if (!String.IsNullOrEmpty(search.Order)) 
             // {
-            //     // DateTime birthday = DateOfBirth;
-            //     int age = DateTime.Today.Year - birthday.Year;
-            //     if (birthday.Date > DateTime.Today.AddYears(-age)) { age--; }
-            //     return age;
-            // }  
-            string sortColumn = "Id";
-            if (!String.IsNullOrEmpty(search.Order)) 
-            {
-                switch (search.Order.ToLower())
-                {
-                    case "name":
-                        sortColumn = "Name";
-                        break;
-                    case "age":
-                        sortColumn = "DateOfBirth";
-                        break;
-                    // case "species":
-                    //     // .OrderBy(a => a.AnimalType.Alias)
-                    //     break;
-                    default:
-                        sortColumn = "Id";
-                        break;
-                }
-            }
+            //     switch (search.Order.ToLower())
+            //     {
+            //         case "name":
+            //             sortColumn = "Name";
+            //             break;
+            //         case "age":
+            //             sortColumn = "DateOfBirth";
+            //             break;
+            //         // case "species":
+            //         //     // .OrderBy(a => a.AnimalType.Alias)
+            //         //     break;
+            //         default:
+            //             sortColumn = "Id";
+            //             break;
+            //     }
+            // }
 
             DateTime? AcquiredDateToSearch = search.DateAcquired == null ? null : DateTime.Parse(search.DateAcquired);
 
-            return _context.Animals
+            // return _context.Animals
+            //     .Include(a => a.AnimalType)
+            //     .Where(a => search.Search == null || 
+            //                 (
+            //                     (search.Name == null || a.Name.ToLower().Contains(search.Name)) &&
+            //                     (search.Age == null || (a.DateOfBirth > DateTime.Today.AddYears(a.DateOfBirth.Year - DateTime.Today.Year) ? DateTime.Today.Year - a.DateOfBirth.Year - 1 : DateTime.Today.Year - a.DateOfBirth.Year) == search.Age) &&
+            //                     (search.DateAcquired == null || a.AcquirementDate == AcquiredDateToSearch) &&
+            //                     (search.Class == null || a.AnimalType.Class.ToLower().Contains(search.Class)) &&
+            //                     (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) 
+            //                 ))
+            //     .OrderBy(a => EF.Property<object>(a, sortColumn))
+            //     .Skip((search.Page - 1) * search.PageSize)
+            //     .Take(search.PageSize);
+
+            var animals = _context.Animals
                 .Include(a => a.AnimalType)
                 .Where(a => search.Search == null || 
                             (
@@ -86,13 +93,33 @@ namespace ZooManagement.Repositories
                                 (search.Class == null || a.AnimalType.Class.ToLower().Contains(search.Class)) &&
                                 (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) 
                             ))
-                .OrderBy(a => EF.Property<object>(a, sortColumn))
                 .Skip((search.Page - 1) * search.PageSize)
                 .Take(search.PageSize);
+            
+            if (!String.IsNullOrEmpty(search.Order)) 
+            {
+                switch (search.Order.ToLower())
+                {
+                    case "name":
+                        return animals.OrderBy(a => a.Name);
+                    case "age":
+                        return animals.OrderByDescending(a => a.DateOfBirth);
+                    case "acquired":
+                        return animals.OrderBy(a => a.AcquirementDate);
+                    case "species":
+                        return animals.OrderBy(a => a.AnimalType.Alias);
+                    case "class":
+                        return animals.OrderBy(a => a.AnimalType.Class);
+                }
+            }
+
+            return animals.OrderBy(a => a.AnimalType.Class);
         }
 
         public int Count(AnimalSearchRequest search)
         {
+            DateTime? AcquiredDateToSearch = search.DateAcquired == null ? null : DateTime.Parse(search.DateAcquired);
+
             return _context.Animals
                 .Include(a => a.AnimalType)
                 .Count(a => search.Search == null || 
