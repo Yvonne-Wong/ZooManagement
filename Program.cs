@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using ZooManagement.Data;
+using System.Data.Entity.Migrations;
 
 namespace ZooManagement
 {
@@ -36,7 +37,7 @@ namespace ZooManagement
                 context.Enclosures.AddRange(enclosures);
                 context.SaveChanges();
 
-                var animaltypes = SampleAnimalTypes.GetAnimalTypes();
+                var animaltypes = SampleAnimalTypes.GetAnimalTypes(context);
                 context.AnimalTypes.AddRange(animaltypes);
                 context.SaveChanges();
 

@@ -70,7 +70,7 @@ namespace ZooManagement.Data
             }
     
         };
-        public static IEnumerable<Enclosure> GetEnclosures()
+        public static List<Enclosure> GetEnclosures()
         {
             return _enclosures;
         }

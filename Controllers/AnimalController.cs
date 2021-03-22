@@ -22,9 +22,6 @@ namespace ZooManagement.Controllers
         [HttpGet("")]
         public ActionResult<AnimalListResponse> Search([FromQuery] AnimalSearchRequest searchRequest) 
         {
-            Console.WriteLine(searchRequest.Name);
-            Console.WriteLine(searchRequest.Class);
-            Console.WriteLine(searchRequest.Alias);
             var animals = _animals.Search(searchRequest);
             var animalCount = _animals.Count(searchRequest);
             return AnimalListResponse.Create(searchRequest, animals, animalCount);
