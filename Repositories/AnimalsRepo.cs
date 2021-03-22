@@ -52,35 +52,58 @@ namespace ZooManagement.Repositories
 
             var animals = _context.Animals
                 .Include(a => a.AnimalType)
+                .Include(a => a.Enclosure)
                 .Where(a => search.Search == null || 
                             (
                                 (search.Name == null || a.Name.ToLower().Contains(search.Name)) &&
                                 (search.Age == null || (a.DateOfBirth > DateTime.Today.AddYears(a.DateOfBirth.Year - DateTime.Today.Year) ? DateTime.Today.Year - a.DateOfBirth.Year - 1 : DateTime.Today.Year - a.DateOfBirth.Year) == search.Age) &&
                                 (search.DateAcquired == null || a.AcquirementDate == AcquiredDateToSearch) &&
                                 (search.Class == null || a.AnimalType.Class.ToLower().Contains(search.Class)) &&
-                                (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) 
-                            ))
-                .Skip((search.Page - 1) * search.PageSize)
-                .Take(search.PageSize);
+                                (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) &&
+                                (search.Enclosure == null || a.Enclosure.EnclosureName.ToLower().Contains(search.Enclosure))
+                            ));
+                // .Skip((search.Page - 1) * search.PageSize)
+                // .Take(search.PageSize);
             
             if (!String.IsNullOrEmpty(search.Order)) 
             {
                 switch (search.Order.ToLower())
                 {
                     case "name":
-                        return animals.OrderBy(a => a.Name);
+                        return animals.OrderBy(a => a.Name)
+                                      .Skip((search.Page - 1) * search.PageSize)
+                                      .Take(search.PageSize);
                     case "age":
-                        return animals.OrderByDescending(a => a.DateOfBirth);
+                        return animals.OrderByDescending(a => a.DateOfBirth)
+                                      .Skip((search.Page - 1) * search.PageSize)
+                                      .Take(search.PageSize);
                     case "acquired":
-                        return animals.OrderBy(a => a.AcquirementDate);
+                        return animals.OrderBy(a => a.AcquirementDate)
+                                      .Skip((search.Page - 1) * search.PageSize)
+                                      .Take(search.PageSize);
                     case "species":
-                        return animals.OrderBy(a => a.AnimalType.Alias);
+                        return animals.OrderBy(a => a.AnimalType.Alias)
+                                      .ThenBy(a => a.Name)
+                                      .Skip((search.Page - 1) * search.PageSize)
+                                      .Take(search.PageSize);
                     case "class":
-                        return animals.OrderBy(a => a.AnimalType.Class);
+                        return animals.OrderBy(a => a.AnimalType.Class)
+                                      .ThenBy(a => a.AnimalType.Alias)
+                                      .ThenBy(a => a.Name)
+                                      .Skip((search.Page - 1) * search.PageSize)
+                                      .Take(search.PageSize);
+                    case "enclosure":
+                        return animals.OrderBy(a => a.Enclosure.EnclosureName)
+                                      .ThenBy(a => a.Name)
+                                      .Skip((search.Page - 1) * search.PageSize)
+                                      .Take(search.PageSize);
                 }
             }
 
-            return animals.OrderBy(a => a.AnimalType.Class);
+            return animals.OrderBy(a => a.Enclosure.EnclosureName)
+                          .ThenBy(a => a.Name)
+                                      .Skip((search.Page - 1) * search.PageSize)
+                                      .Take(search.PageSize);
         }
 
         public int Count(AnimalSearchRequest search)
@@ -89,13 +112,15 @@ namespace ZooManagement.Repositories
 
             return _context.Animals
                 .Include(a => a.AnimalType)
+                .Include(a => a.Enclosure)
                 .Count(a => search.Search == null || 
                             (
                                 (search.Name == null || a.Name.ToLower().Contains(search.Name)) &&
                                 (search.Age == null || (a.DateOfBirth > DateTime.Today.AddYears(a.DateOfBirth.Year - DateTime.Today.Year) ? DateTime.Today.Year - a.DateOfBirth.Year - 1 : DateTime.Today.Year - a.DateOfBirth.Year) == search.Age) &&
                                 (search.DateAcquired == null || a.AcquirementDate == AcquiredDateToSearch) &&
                                 (search.Class == null || a.AnimalType.Class.ToLower().Contains(search.Class)) &&
-                                (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) 
+                                (search.Alias == null || a.AnimalType.Alias.ToLower().Contains(search.Alias)) &&
+                                (search.Enclosure == null || a.Enclosure.EnclosureName.ToLower().Contains(search.Enclosure)) 
                             ));
         }
     }

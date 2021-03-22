@@ -14,9 +14,12 @@ namespace ZooManagement.Controllers
     {
         private readonly IAnimalsRepo _animals;
 
-        public AnimalController(IAnimalsRepo animals)
+        private readonly IEnclosuresRepo _enclosures;
+
+        public AnimalController(IAnimalsRepo animals, IEnclosuresRepo enclosures)
         {
             _animals = animals;
+            _enclosures = enclosures;
         }
 
         [HttpGet("")]
@@ -42,12 +45,33 @@ namespace ZooManagement.Controllers
                 return BadRequest(ModelState);
             }
             
-            var animal = _animals.Add(newAnimal);
+            // can the specified enclosure take that type of animal? Enclosure.AnimalTypes
+            // if so, how many animals exist in the enclosure attached to newAnimal.EnclosureId 
+            // how many Animals have that EnclosureId
+            // is this number < Enclosure.MaxCapacity
+            // if so, add the animal
 
-            // var url = Url.Action("GetById", new { id = animal.Id });
-            // var responseViewModel = new AnimalResponse(animal);
-            // return Created(url, responseViewModel);
-            return animal;
+            if (_enclosures.EnclosureCanTakeAnimal(newAnimal.EnclosureId, newAnimal.AnimalTypeId))
+            {
+                var animal = _animals.Add(newAnimal);
+                return animal;
+            }
+
+            return BadRequest(ModelState);          
+            
         }
+
+        // [HttpPost("addType")]
+        // public ActionResult<AnimalType> Add([FromBody] AddAnimalTypeRequest newAnimalType)
+        // {
+        //     if (!ModelState.IsValid)
+        //     {
+        //         return BadRequest(ModelState);
+        //     }
+            
+        //     var animalType = _animals.Add(newAnimalType);
+
+        //     return animalType;
+        // }
     }
 }

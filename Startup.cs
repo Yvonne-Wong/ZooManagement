@@ -47,6 +47,7 @@ namespace ZooManagement
             });
 
             services.AddTransient<IAnimalsRepo, AnimalsRepo>();
+            services.AddTransient<IEnclosuresRepo, EnclosuresRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
